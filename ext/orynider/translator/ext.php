@@ -8,7 +8,7 @@
  *
  */
 
-namespace orynider\mx_translator;
+namespace orynider\translator;
 
 /**
  * Knowledge Base Extension base
@@ -47,7 +47,7 @@ class ext extends \phpbb\extension\base
 		/*
 		if ($old_state === false)
 		{
-			$mx_translator_helper = new \orynider\mx_translator\acp\translator_helper (
+			$translator_helper = new \orynider\translator\acp\translator_helper (
 				$this->container->get('cache.driver'),
 				$this->container->get('config'),
 				$this->container->get('file_downloader'),
@@ -58,14 +58,14 @@ class ext extends \phpbb\extension\base
 
 			try
 			{
-				$mx_translator_helper->set_mx_translator_services();
+				$translator_helper->set_translator_services();
 			}
 			catch (\RuntimeException $e)
 			{
-				$mx_translator_helper->log_mx_translator_error($e->getMessage());
+				$translator_helper->log_translator_error($e->getMessage());
 			}
 
-			return 'mx_translator';
+			return 'translator';
 		}
 		*/
 		switch ($old_state)
@@ -73,11 +73,11 @@ class ext extends \phpbb\extension\base
 			case '': // Empty means nothing has run yet
 
 				$phpbb_notifications = $this->container->get('notification_manager');
-				$phpbb_notifications->enable_notifications('orynider.mx_translator.notification.type.langfile_in_queue');
-				$phpbb_notifications->enable_notifications('orynider.mx_translator.notification.type.approve_langfile');
-				$phpbb_notifications->enable_notifications('orynider.mx_translator.notification.type.delete_langfile');
-				$phpbb_notifications->enable_notifications('orynider.mx_translator.notification.type.deny_langfile');
-				$phpbb_notifications->enable_notifications('orynider.mx_translator.notification.type.disapprove_langfile');
+				$phpbb_notifications->enable_notifications('orynider.translator.notification.type.langfile_in_queue');
+				$phpbb_notifications->enable_notifications('orynider.translator.notification.type.approve_langfile');
+				$phpbb_notifications->enable_notifications('orynider.translator.notification.type.delete_langfile');
+				$phpbb_notifications->enable_notifications('orynider.translator.notification.type.deny_langfile');
+				$phpbb_notifications->enable_notifications('orynider.translator.notification.type.disapprove_langfile');
 				return 'notification';
 
 			break;
@@ -103,11 +103,11 @@ class ext extends \phpbb\extension\base
 			case '': // Empty means nothing has run yet
 
 				$phpbb_notifications = $this->container->get('notification_manager');
-				$phpbb_notifications->disable_notifications('orynider.mx_translator.notification.type.langfile_in_queue');
-				$phpbb_notifications->disable_notifications('orynider.mx_translator.notification.type.approve_langfile');
-				$phpbb_notifications->disable_notifications('orynider.mx_translator.notification.type.delete_langfile');
-				$phpbb_notifications->disable_notifications('orynider.mx_translator.notification.type.deny_langfile');
-				$phpbb_notifications->disable_notifications('orynider.mx_translator.notification.type.disapprove_langfile');
+				$phpbb_notifications->disable_notifications('orynider.translator.notification.type.langfile_in_queue');
+				$phpbb_notifications->disable_notifications('orynider.translator.notification.type.approve_langfile');
+				$phpbb_notifications->disable_notifications('orynider.translator.notification.type.delete_langfile');
+				$phpbb_notifications->disable_notifications('orynider.translator.notification.type.deny_langfile');
+				$phpbb_notifications->disable_notifications('orynider.translator.notification.type.disapprove_langfile');
 				return 'notification';
 
 			break;
@@ -134,11 +134,11 @@ class ext extends \phpbb\extension\base
 			case '': // Empty means nothing has run yet
 
 				$phpbb_notifications = $this->container->get('notification_manager');
-				$phpbb_notifications->purge_notifications('orynider.mx_translator.notification.type.langfile_in_queue');
-				$phpbb_notifications->purge_notifications('orynider.mx_translator.notification.type.approve_langfile');
-				$phpbb_notifications->purge_notifications('orynider.mx_translator.notification.type.delete_langfile');
-				$phpbb_notifications->purge_notifications('orynider.mx_translator.notification.type.deny_langfile');
-				$phpbb_notifications->purge_notifications('orynider.mx_translator.notification.type.disapprove_langfile');
+				$phpbb_notifications->purge_notifications('orynider.translator.notification.type.langfile_in_queue');
+				$phpbb_notifications->purge_notifications('orynider.translator.notification.type.approve_langfile');
+				$phpbb_notifications->purge_notifications('orynider.translator.notification.type.delete_langfile');
+				$phpbb_notifications->purge_notifications('orynider.translator.notification.type.deny_langfile');
+				$phpbb_notifications->purge_notifications('orynider.translator.notification.type.disapprove_langfile');
 				return 'notification';
 
 			break;

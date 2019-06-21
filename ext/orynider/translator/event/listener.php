@@ -7,7 +7,7 @@
 *
 */
 
-namespace orynider\mx_translator\event;
+namespace orynider\translator\event;
 
 /**
 * @ignore
@@ -40,7 +40,7 @@ class listener implements EventSubscriberInterface
 	{
 		$lang_set_ext = $event['lang_set_ext'];
 		$lang_set_ext[] = array(
-		'ext_name' => 'orynider/mx_translator',
+		'ext_name' => 'orynider/translator',
 		'lang_set' => 'common',
 		);
 		$event['lang_set_ext'] = $lang_set_ext;

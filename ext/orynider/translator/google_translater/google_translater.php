@@ -2,7 +2,7 @@
 /**
  * @package phpBB Extension - phpBB MX-Translator
  * @copyright (c) 2018 orynider
- * orynider\mx_translator\google_translater 
+ * orynider\translator\google_translater 
  *
  *
  * Based on  GoogleTranslate.class.php by Adrián Barrio Andrés
@@ -17,7 +17,7 @@
  * @copyright Andrew Kulakov (c) 2011
  *
  */
-namespace orynider\mx_translator\google_translater;
+namespace orynider\translator\google_translater;
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -271,7 +271,7 @@ class google_translater
 		/** **/
 		curl_setopt($ch, CURLOPT_ENCODING, 'UTF-8');		
 		//curl_setopt($ch, CURLOPT_USERAGENT, @get_browser(null, true));
-		curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win32; x86; rv:52.7) Gecko/20100101 Firefox/52.7.2');  
+		curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (X11; Linux x86_64; Ubuntu 19.04.2 LTS) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.1750.0 Maxthon/5.5.5.3 Safari/567.36');  
 		$response = curl_exec($ch);
         // Check if any error occured
         if(curl_errno($ch))
@@ -288,15 +288,37 @@ class google_translater
 		if (empty($this->errors))
 		{
             $result = '';
-			$json = json_decode($response);
-			//Force array
-			$sentences = $json->sentences;
-			$sentences = is_array($sentences) ? $sentences : array($sentences);
-			foreach ($sentences as $sentence) 
-			{
-                $result .= $translit ? $sentence->translit : $sentence->trans;  
-            }
-            return $result;
+			
+			if ($json = json_decode($response) && is_object($json))
+			{		
+				//Force array
+				$sentences = $json->sentences;
+				$sentences = is_array($sentences) ? $sentences : array($sentences);
+				foreach ($sentences as $sentence) 
+				{
+	                $result .= $translit ? $sentence->translit : $sentence->trans;  
+	            }
+	            return $result;
+			}
+			else
+			{		
+				$contents = explode('URL: ', $response);
+				$page= explode('<br>', $contents[1]);		
+				$response = $this->_curl_to_google($page[0]);
+				$json = json_decode($response);
+				//Force array
+				if (!is_object($json))
+				{
+					return false;
+				 }
+				$sentences = $json->sentences;
+				$sentences = is_array($sentences) ? $sentences : array($sentences);
+				foreach ($sentences as $sentence) 
+				{
+	                $result .= $translit ? $sentence->translit : $sentence->trans;  
+	            }
+	            return $result;				
+			}			
 		} 
 		else
 		{

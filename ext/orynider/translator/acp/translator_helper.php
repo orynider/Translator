@@ -1,19 +1,19 @@
 <?php
 /**
  *
- * mx_translator extension for the phpBB Forum Software package.
+ * translator extension for the phpBB Forum Software package.
  *
  * @copyright (c) 2014 phpBB Limited <https://www.phpbb.com>
  * @license GNU General Public License, version 2 (GPL-2.0)
  *
  */
 
-namespace orynider\mx_translator\acp;
+namespace orynider\translator\acp;
 
 /**
- * Class to handle allowing or disallowing mx_translator services
+ * Class to handle allowing or disallowing translator services
  */
-class mx_translator_helper
+class translator_helper
 {
 	/** @var \orynider\cache\driver\driver_interface $cache */
 	protected $cache;
@@ -57,7 +57,7 @@ class mx_translator_helper
 	}
 
 	/**
-	 * Obtains the latest mx_translator services information from phpBB
+	 * Obtains the latest translator services information from phpBB
 	 *
 	 * @param bool $force_update Ignores cached data. Defaults to false.
 	 * @param bool $force_cache  Force the use of the cache. Override $force_update.
@@ -66,9 +66,9 @@ class mx_translator_helper
 	 *
 	 * @return void
 	 */
-	public function set_mx_translator_services($force_update = false, $force_cache = false)
+	public function set_translator_services($force_update = false, $force_cache = false)
 	{
-		$cache_key = '_versioncheck_mx_translator_' . $this->use_ssl;
+		$cache_key = '_versioncheck_translator_' . $this->use_ssl;
 
 		$info = $this->cache->get($cache_key);
 
@@ -80,7 +80,7 @@ class mx_translator_helper
 		{
 			try
 			{
-				$info = $this->file_downloader->get('www.phpbb.com', '/mx_translator', 'enabled', 443);
+				$info = $this->file_downloader->get('www.phpbb.com', '/translator', 'enabled', 443);
 			}
 			catch (\orynider\exception\runtime_exception $exception)
 			{
@@ -90,15 +90,15 @@ class mx_translator_helper
 
 			if ($info === '0')
 			{
-				$this->set_mx_translator_configs(array(
-					'allow_mx_translator_phpbb'	=> false,
+				$this->set_translator_configs(array(
+					'allow_translator_phpbb'	=> false,
 				));
 			}
 			else
 			{
 				$info = '1';
-				$this->set_mx_translator_configs(array(
-					'allow_mx_translator_phpbb'	=> true,
+				$this->set_translator_configs(array(
+					'allow_translator_phpbb'	=> true,
 				));
 			}
 
@@ -107,20 +107,20 @@ class mx_translator_helper
 	}
 
 	/**
-	 * Sets mx_translator service configs as determined by phpBB
+	 * Sets translator service configs as determined by phpBB
 	 *
-	 * @param array $data Array of mx_translator file data.
+	 * @param array $data Array of translator file data.
 	 *
 	 * @return void
 	 */
-	protected function set_mx_translator_configs($data)
+	protected function set_translator_configs($data)
 	{
-		$mx_translator_configs = array(
-			'allow_mx_translator_phpbb',
-			'phpbb_mx_translator_api_key',
+		$translator_configs = array(
+			'allow_translator_phpbb',
+			'phpbb_translator_api_key',
 		);
 
-		foreach ($mx_translator_configs as $cfg_name)
+		foreach ($translator_configs as $cfg_name)
 		{
 			if (array_key_exists($cfg_name, $data) && ($data[$cfg_name] != $this->config[$cfg_name] || !isset($this->config[$cfg_name])))
 			{
@@ -128,15 +128,15 @@ class mx_translator_helper
 			}
 		}
 
-		$this->config->set('mx_translator_last_gc', time(), false);
+		$this->config->set('translator_last_gc', time(), false);
 	}
 
 	/**
-	 * Log a mx_translator error message to the error log
+	 * Log a translator error message to the error log
 	 *
 	 * @param string $message The error message
 	 */
-	public function log_mx_translator_error($message)
+	public function log_translator_error($message)
 	{
 		$user_id = empty($this->user->data) ? ANONYMOUS : $this->user->data['user_id'];
 		$user_ip = empty($this->user->ip) ? '' : $this->user->ip;

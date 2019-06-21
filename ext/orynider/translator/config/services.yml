@@ -1,6 +1,6 @@
 services:
-    orynider.mx_translator.admin.controller:
-        class: orynider\mx_translator\controller\mxp_translator
+    orynider.translator.admin.controller:
+        class: orynider\translator\controller\translator
         arguments:
             - '@cache.driver'
             - '@config'
@@ -15,13 +15,29 @@ services:
             - '%core.root_path%'			
             - '%core.root_path%'
             - '%core.php_ext%'
-    orynider.mx_translator.googletranslater:
-        class: orynider\mx_translator\google_translater\google_translater
+    orynider.translator.core:
+        class: orynider\translator\core\translator
+        arguments:
+            - '@cache.driver'
+            - '@config'
+            - '@service_container'
+            - '@controller.helper'
+            - '@dbal.conn'
+            - '@language'
+            - '@log'
+            - '@request'
+            - '@template'
+            - '@user'
+            - '%core.root_path%'			
+            - '%core.root_path%'
+            - '%core.php_ext%'
+    orynider.translator.googletranslater:
+        class: orynider\translator\google_translater\google_translater
         arguments:	   
             - '@language'	   
             - '@request'	   
-    orynider.mx_translator.listener:
-        class: orynider\mx_translator\event\listener
+    orynider.translator.listener:
+        class: orynider\translator\event\listener
         arguments:
             - '@template'
             - '@config'

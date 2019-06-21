@@ -1,5 +1,5 @@
 {
-    "name": "orynider/mx_translator",
+    "name": "orynider/translator",
     "type": "phpbb-extension",
     "description": "Translator extension for phpBB based on module by culprit_cz. Adds Translator to the Forum Header.",
     "homepage": "",
@@ -24,7 +24,7 @@
         },
         "version-check": {
             "host": "www.phpbb.com",
-            "directory": "/customise/db/extension/mx_translator",
+            "directory": "/customise/db/extension/translator",
             "filename": "version_check"
         }
     }

@@ -7,7 +7,7 @@
 * @license GNU General Public License, version 2 (GPL-2.0)
  *
  */
-namespace orynider\mx_translator\acp;
+namespace orynider\translator\acp;
 
 /*
 if ( !empty( $setmodules))
@@ -27,21 +27,17 @@ if ( !empty( $setmodules))
 $basename = basename( __FILE__);
 $phpbb_root_path = (defined('PHPBB_ROOT_PATH')) ? PHPBB_ROOT_PATH : './../';
 $mx_root_path = (defined('PHPBB_USE_BOARD_URL_PATH') && PHPBB_USE_BOARD_URL_PATH) ? generate_board_url() . '/' : $phpbb_root_path;
-$module_root_path = $phpbb_root_path . 'ext/orynider/mx_translator/';
+$module_root_path = $phpbb_root_path . 'ext/orynider/translator/';
 $admin_module_root_path = $module_root_path . 'acp/';		
 $phpEx = substr( __FILE__, strrpos( __FILE__, '.') + 1);
-define('MODULE_URL', generate_board_url() . 'ext/orynider/mx_translator/');		
+define('MODULE_URL', generate_board_url() . 'ext/orynider/translator/');		
 //define('IN_AJAX', (isset($_GET['ajax']) && ($_GET['ajax'] == 1) && ($_SERVER['HTTP_SEREFER'] = $_SERVER['PHP_SELF'])) ? 1 : 0);
 define('IN_PORTAL', 1);
 
 $no_page_header = 'no_page_header';
-//require_once($mx_root_path . 'admin/pagestart.' . $phpEx);
-//include_once($module_root_path . 'includes/translator.' . $phpEx);
 
-//@error_reporting( E_ALL || !E_NOTICE);
-//$mxp_translator = new mxp_translator();
 /**
-* Class  mxp_translator_module extends mxp_translator
+* Class  translator_module extends translator
 * Displays a message to the user and allows him to send an email
 */
 class translator_module
@@ -110,10 +106,10 @@ class translator_module
 		/* */	
 		
 		/* Get an instance of the admin controller */
-		$mxp_translator = $phpbb_container->get('orynider.mx_translator.admin.controller');
+		$translator = $phpbb_container->get('orynider.translator.admin.controller');
 			
 		// Make the $u_action url available in the admin controller
-		//$mxp_translator->set_page_url($this->u_action);
+		//$translator->set_page_url($this->u_action);
 
 		/** Load the "settings" or "manage" module modes **/
 		switch ($mode)
@@ -124,7 +120,7 @@ class translator_module
 				// Set the page title for our ACP page
 				$this->page_title = $this->lang->lang('ACP_TRANSLATOR');	
 				// Load the display options handle in the admin controller 
-				$mxp_translator->display_settings($this->tpl_name, $this->page_title);				
+				$translator->display_settings($this->tpl_name, $this->page_title);				
 			break;
 			case 'translate':
 			default:
@@ -136,7 +132,7 @@ class translator_module
 						// Set the page title for our ACP page
 						$this->page_title = $this->lang->lang('ACP_TRANSLATE_MX_PORTAL');
 						// Load the display options handle in the admin controller 
-						$mxp_translator->display_translate($this->tpl_name, $this->page_title);
+						$translator->display_translate($this->tpl_name, $this->page_title);
 					break;			
 					case 'MODS':
 						// Load a template from adm/style for our ACP page
@@ -144,15 +140,15 @@ class translator_module
 						// Set the page title for our ACP page
 						$this->page_title = $this->lang->lang('ACP_TRANSLATE_MX_MODULES');
 						// Load the display options handle in the admin controller 
-						$mxp_translator->display_translate($this->tpl_name, $this->page_title);
+						$translator->display_translate($this->tpl_name, $this->page_title);
 					break;			
-					case 'PHPBB':
+					case 'phpbb':
 						// Load a template from adm/style for our ACP page
 						$this->tpl_name = 'lang_translate';
 						// Set the page title for our ACP page
 						$this->page_title = $this->lang->lang('ACP_TRANSLATE_PHPBB_LANG');
 						// Load the display options handle in the admin controller 
-						$mxp_translator->display_translate($this->tpl_name, $this->page_title);
+						$translator->display_translate($this->tpl_name, $this->page_title);
 					break;			
 					case 'phpbb_ext':
 						// Load a template from adm/style for our ACP page
@@ -160,7 +156,7 @@ class translator_module
 						// Set the page title for our ACP page
 						$this->page_title = $this->lang->lang('ACP_TRANSLATE_PHPBB_EXT');
 						// Load the display options handle in the admin controller 
-						$mxp_translator->display_translate($this->tpl_name, $this->page_title);
+						$translator->display_translate($this->tpl_name, $this->page_title);
 					break;
 				}		
 			break;	
